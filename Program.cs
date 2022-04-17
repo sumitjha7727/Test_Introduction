@@ -1,33 +1,53 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Testing_Introduction
+namespace Find_Element
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            IWebDriver driver = new ChromeDriver();
+            IWebDriver Driver = new ChromeDriver();
 
-            driver.Navigate().GoToUrl("https://www.google.com/");
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+
+            string name = "abcd";
+            string email = "abcd@gmail.com";
+            string Cadd = "aaaaaaaaa";
+            string Padd = "bbbbbbbbbb";
 
             Thread.Sleep(2000);
 
-            IWebElement SearchElement = driver.FindElement(By.Name("q"));
+            Driver.Navigate().GoToUrl("https://demoqa.com/text-box");
 
-            SearchElement.SendKeys("Bassetti India");
+            Thread.Sleep(2000);
 
-            IWebElement buttonElement = driver.FindElement(By.Name("btnK"));
-            buttonElement.Click();
+            Driver.Manage().Window.Maximize();
 
-            driver.Close();
+            Driver.FindElement(By.Id("userName")).SendKeys(name);
+
+            Driver.FindElement(By.Id("userEmail")).SendKeys(email);
+
+            Driver.FindElement(By.Id("currentAddress")).SendKeys(Cadd);
+
+            Driver.FindElement(By.Id("permanentAddress")).SendKeys(Padd);
+
+            Thread.Sleep(2000);
+
+            js.ExecuteScript("window.scrollBy(0,400)");
+
+            Driver.FindElement(By.Id("submit")).Click();
+
+            Task.Delay(10000).Wait();
+
+            Console.Write("Test Case Closed:");
+
+            Driver.Close();
+            Driver.Quit();
+
         }
     }
 }
